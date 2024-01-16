@@ -1,11 +1,12 @@
 import { View, StyleSheet } from 'react-native';
 import { Home } from './src/screens';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 export default function App() {
   return (
-    <View style={styles.container}>
+    <GestureHandlerRootView style={styles.container}>
       <Home />
-    </View>
+    </GestureHandlerRootView>
   );
 }
 
