@@ -1,15 +1,12 @@
-export interface LatLng {
+export interface Location {
+    id?: number;
+    title: string;
     latitude: number;
     longitude: number;
-}
-
-export interface Location {
-    id: number;
-    address: string;
-    name: string;
-    coordinates: LatLng;
-    lsp: number;
-    t: string;
+    auid?: number;
+    address?: string;
+    lsp?: number;
+    t?: string;
 }
 
 export function parseLocationFromAppleMapsUrl(url: string) : Location {
@@ -24,16 +21,12 @@ export function parseLocationFromAppleMapsUrl(url: string) : Location {
 
     const latlng = params.ll.split(',');
 
-    const LatLng = <LatLng>{
+    const location = <Location>{
+        auid: params.auid,
+        address: params.address.replace(/%20/g, " "),
+        title: params.q.replace(/%20/g, " "),
         latitude: latlng[0],
         longitude: latlng[1],
-    };
-
-    const location = <Location>{
-        id: params.auid,
-        address: params.address,
-        name: params.q,
-        coordinates: LatLng,
         lsp: params.lsp,
         t: params.t,
     }
