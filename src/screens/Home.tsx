@@ -17,7 +17,9 @@ const Home = () => {
               id integer primary key not null,
               title text,
               latitude float,
-              longitude float
+              longitude float,
+              auid integer,
+              address text
           );`
       );
     });
@@ -38,33 +40,21 @@ const Home = () => {
   const add = (location) => {
     db.transaction(
       (tx) => {
-        tx.executeSql("insert into locations (title, latitude, longitude) values (?, ?, ?)", [location.title, location.latitude, location.longitude]);
+        tx.executeSql("insert into locations (title, latitude, longitude, auid, address) values (?, ?, ?, ?, ?)",
+          [
+            location.title,
+            location.latitude,
+            location.longitude,
+            location.auid,
+            location.address
+          ]);
       },
       () => {console.log('Error')},
       getLocations,
     );
   };
 
-  const [savedLocations, setSavedLocations] = useState<Location[]>([
-    {
-      id: 1,
-      latitude: 41.44935872697216,
-      longitude: -71.39942479096507,
-      title: 'Beavertail',
-    },
-    {
-      id: 2,
-      latitude: 41.430472940397664,
-      longitude: -71.45571682409623,
-      title: 'The Towers',
-    },
-    {
-      id: 3,
-      latitude: 41.57115960160157,
-      longitude: -71.18787139773296,
-      title: 'Groundswell'
-    }
-  ]);
+  const [savedLocations, setSavedLocations] = useState<Location[]>([]);
 
   const [mapRegion, setmapRegion] = useState({
     latitude: 41.44935872697216,
@@ -144,8 +134,7 @@ const Home = () => {
                 <Text>Coordinates:</Text>
                 <Text>  Lat:  {item.latitude}</Text>
                 <Text>  Lng:  {item.longitude}</Text>
-                <Text>lsp: {item.lsp}</Text>
-                <Text>t: {item.t}</Text>
+                <Text>Apple ID: {item.auid}</Text>
               </View>
             }
           />
