@@ -2,6 +2,8 @@
 
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTLinkingManager.h>
+#import <RNShareMenu/ShareMenuManager.h>
+
 
 @implementation AppDelegate
 
@@ -26,9 +28,19 @@
 }
 
 // Linking API
-- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
-  return [super application:application openURL:url options:options] || [RCTLinkingManager application:application openURL:url options:options];
+- (BOOL)application:(UIApplication *)application
+  openURL:(NSURL *)url
+  options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options
+{
+  return [super application:application openURL:url options:options] || [RCTLinkingManager application:application openURL:url options:options] || [ShareMenuManager application:application openURL:url options:options];
 }
+
+// - (BOOL)application:(UIApplication *)app
+//   openURL:(NSURL *)url
+//   options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options
+// {
+//   return ;
+// }
 
 // Universal Links
 - (BOOL)application:(UIApplication *)application continueUserActivity:(nonnull NSUserActivity *)userActivity restorationHandler:(nonnull void (^)(NSArray<id<UIUserActivityRestoring>> * _Nullable))restorationHandler {
