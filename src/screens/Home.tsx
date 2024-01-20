@@ -3,8 +3,10 @@ import { View, Text, StyleSheet, FlatList, Button, TextInput } from 'react-nativ
 import BottomSheet from '@gorhom/bottom-sheet';
 import MapView, { Marker } from 'react-native-maps';
 import { Location, parseLocationFromAppleMapsUrl } from '../utilities';
-import { locations, getLocations } from '../services/localLocations';
+// import { locations, getLocations } from '../services/localLocations';
 import * as SQLite from 'expo-sqlite';
+import Tag from '../components/Tag';
+import { dummyData } from '../services/TagService';
 
 const Home = () => {
   // datavase
@@ -92,6 +94,8 @@ const Home = () => {
     // );
   }
 
+  const [tags, setTags] = useState(dummyData)
+
   // renders
   return (
     <View style={styles.container}>
@@ -117,6 +121,11 @@ const Home = () => {
       >
         <View style={styles.contentContainer}>
           <Text style={{ fontSize: 24 }}>Saved Locations:</Text>
+          <View style={{width: "100%", padding: 10, display: 'flex', flexDirection: 'row', flexWrap: 'wrap'}}>
+            { tags.map((tag) => (
+                <Tag key={tag.id} {...tag}/>
+              )) }
+          </View>
           <TextInput
             style={{ height: 40 }}
             placeholder="Paste link here..."
