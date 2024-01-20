@@ -5,7 +5,7 @@ import MapView, { Marker } from 'react-native-maps';
 import { Location, parseLocationFromAppleMapsUrl } from '../utilities';
 // import { locations, getLocations } from '../services/localLocations';
 import * as SQLite from 'expo-sqlite';
-import Tag from '../components/Tag';
+import { Tag, ProfileButton} from '../components';
 import { dummyData } from '../services/TagService';
 
 const Home = () => {
@@ -120,8 +120,13 @@ const Home = () => {
         onChange={handleSheetChanges}
       >
         <View style={styles.contentContainer}>
-          <Text style={{ fontSize: 24 }}>Saved Locations:</Text>
-          <View style={{width: "100%", padding: 10, display: 'flex', flexDirection: 'row', flexWrap: 'wrap'}}>
+          {/* SHEET HEADER */}
+          <View style={styles.sheetHeader}>
+            <Text style={{ fontSize: 18, fontWeight: 'bold' }}>Let's go on a trip</Text>
+            <ProfileButton style={{ fontSize: 18, fontWeight: 'bold' }}>⚙</ProfileButton>
+          </View>
+          {/* TAG SECTION */}
+          <View style={styles.tags}>
             { tags.map((tag) => (
                 <Tag key={tag.id} {...tag}/>
               )) }
@@ -168,6 +173,23 @@ const styles = StyleSheet.create({
     padding: 20,
     paddingBottom: 30,
   },
+  sheetHeader: {
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingBottom: 8,
+    borderBottomWidth: 0.2,
+    borderBottomColor: 'gray',
+  },
+  tags: {
+    width: "100%",
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    paddingVertical: 12,
+  }
 });
 
 export default Home;
