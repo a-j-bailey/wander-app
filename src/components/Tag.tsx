@@ -52,14 +52,6 @@ const styles = (highlightColor) => StyleSheet.create({
         borderRadius: 16,
         borderWidth: 1,
         borderColor: `#${highlightColor}`,
-
-        // Shadow
-        shadowColor: `#${highlightColor}`,
-        shadowOffset: {width: 0, height: 4},
-        shadowOpacity: 0.4,
-        shadowRadius: 4,
-
-        // transform: [{scale: 0.9}],
     },
     title: {
         color: `#${highlightColor}`,
