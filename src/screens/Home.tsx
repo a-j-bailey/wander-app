@@ -80,7 +80,6 @@ const Home = () => {
 
   const handlePoiClick = useCallback((event) => {
     console.log('coordinate', event.nativeEvent);
-    // console.log('position', object.position);
   }, []);
 
   const parseLink = () => {
@@ -104,8 +103,7 @@ const Home = () => {
         // region={mapRegion}
         onMarkerPress={handlePoiClick}
         showsPointsOfInterest={true}
-        onPoiClick={(event) => { console.log('POI', event) }}
-      // mapType='hybridFlyover'
+        mapType='standard'
       >
         {
           savedLocations.map((location) => {
@@ -123,7 +121,7 @@ const Home = () => {
           {/* SHEET HEADER */}
           <View style={styles.sheetHeader}>
             <Text style={{ fontSize: 18, fontWeight: 'bold' }}>Let's go on a trip</Text>
-            <ProfileButton style={{ fontSize: 18, fontWeight: 'bold' }}>⚙</ProfileButton>
+            <ProfileButton />
           </View>
           {/* TAG SECTION */}
           <View style={styles.tags}>

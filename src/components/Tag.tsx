@@ -21,8 +21,6 @@ const Tag = ({
     highlightColor: string
 }) => {
 
-    console.log(title);
-
     return (
         <View style={styles(highlightColor).tagContainer} >
             <Text style={styles(highlightColor).title}>{emoji} {title}</Text>
@@ -55,7 +53,6 @@ const styles = (highlightColor) => StyleSheet.create({
     },
     title: {
         color: `#${highlightColor}`,
-        filter: 'brightness(85%)',
     }
 });
 
