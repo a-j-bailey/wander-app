@@ -7,7 +7,8 @@
 // import Text from './Text';
 // import {useTheme, useTranslation} from '../hooks/';
 
-import { StyleSheet, Text, View } from "react-native"
+import { useState } from "react";
+import { StyleSheet, Text, TouchableHighlight, View } from "react-native"
 
 const Tag = ({
     id,
@@ -21,10 +22,19 @@ const Tag = ({
     highlightColor: string
 }) => {
 
+    const onPress = (event) => {
+        console.log(id);
+    }
+
     return (
-        <View style={styles(highlightColor).tagContainer} >
-            <Text style={styles(highlightColor).title}>{emoji} {title}</Text>
-        </View>
+        <TouchableHighlight 
+            onPress={onPress}
+            underlayColor='white'
+        >
+            <View style={styles(highlightColor).tagContainer} >
+                <Text style={styles(highlightColor).title}>{emoji} {title}</Text>
+            </View>
+        </TouchableHighlight>
     )
 };
 
