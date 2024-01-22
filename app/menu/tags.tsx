@@ -1,42 +1,64 @@
 import { View, Text, Button, FlatList, StyleSheet } from 'react-native';
 import { Link, Stack, useRouter } from 'expo-router';
+import { dummyData } from '../../src/services/TagService';
+import { Edit, Pencil, Plus } from 'lucide-react-native';
 
 const Item = ({
-  title
+  title,
+  emoji,
+  highlightColor
 }: {
   title: string
+  emoji: string
+  highlightColor: string
 }) => (
-  <View style={styles.item}>
-    <Text style={styles.title}>{title}</Text>
+  <View style={styles(highlightColor).item}>
+    <View style={styles(highlightColor).iconContainer}>
+      <Text >{emoji}</Text>
+    </View>
+    <Text style={styles(highlightColor).title}>{title}</Text>
+    <Pencil size={16}/>
   </View>
 );
 
 export default function tags() {
-  const router = useRouter();
-
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Stack.Screen />
+    <View>
+      <Stack.Screen 
+        options={{
+          title: 'Settings',
+          headerRight: () => <Plus onPress={() => {}} />,
+        }}
+      />
       <FlatList
-        data={[]}
-        renderItem={({item}) => <Text />}
-        keyExtractor={item => item.id}
+        data={dummyData}
+        renderItem={({item}) => <Item {...item} />}
       />
     </View>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    },
+const styles = (highlightColor) => StyleSheet.create({
   item: {
-    backgroundColor: '#f9c2ff',
-    padding: 20,
-    marginVertical: 8,
-    marginHorizontal: 16,
+    borderBottomColor: '#e1e1e1',
+    borderBottomWidth: 0.2,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  iconContainer: {
+    padding: 4,
+    backgroundColor: `#${highlightColor}`,
+    width: 40,
+    height: 40,
+    borderRadius: 24,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   title: {
-    fontSize: 32,
-  },
+    marginHorizontal: 12,
+    fontSize: 16,
+  }
 });
