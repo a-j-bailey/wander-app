@@ -1,15 +1,16 @@
 import React, { useCallback, useState, useMemo, useRef, useEffect } from 'react';
-import { View, Text, StyleSheet, FlatList, Button, TextInput } from 'react-native';
+import { View, Text, StyleSheet, FlatList, Button, TextInput, Pressable } from 'react-native';
 import BottomSheet from '@gorhom/bottom-sheet';
 import MapView, { Marker } from 'react-native-maps';
-import { Location, parseLocationFromAppleMapsUrl } from '../utilities';
+import { Location, parseLocationFromAppleMapsUrl } from '../src/utilities';
 // import { locations, getLocations } from '../services/localLocations';
 import * as SQLite from 'expo-sqlite';
-import { Tag, ProfileButton} from '../components';
-import { dummyData } from '../services/TagService';
+import { Tag, ProfileButton} from '../src/components';
+import { dummyData } from '../src/services/TagService';
+import { Link, useNavigation } from 'expo-router';
 
 const Home = () => {
-  // datavase
+  // database
   const db = SQLite.openDatabase("database.db");
 
   useEffect(() => {
@@ -121,7 +122,11 @@ const Home = () => {
           {/* SHEET HEADER */}
           <View style={styles.sheetHeader}>
             <Text style={{ fontSize: 18, fontWeight: 'bold' }}>Let's go on a trip</Text>
-            <ProfileButton />
+            <Link href={{ pathname: 'menu'}} asChild>
+                <Pressable>
+                  <ProfileButton />
+                </Pressable>
+            </Link>
           </View>
           {/* TAG SECTION */}
           <View style={styles.tags}>

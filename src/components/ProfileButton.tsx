@@ -1,13 +1,4 @@
-// import {React, useCallback} from 'react';
-// import {TouchableOpacity} from 'react-native';
-// import {useNavigation} from '@react-navigation/core';
-// import {Ionicons} from '@expo/vector-icons';
-// import Block from './Block';
-// import Image from './Image';
-// import Text from './Text';
-// import {useTheme, useTranslation} from '../hooks/';
-
-import { StyleSheet, Text, View } from "react-native"
+import { Text, View } from "react-native"
 
 const ProfileButton = ({
     size = 40

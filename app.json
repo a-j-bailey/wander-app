@@ -2,6 +2,7 @@
   "expo": {
     "name": "wander-app",
     "slug": "wander-app",
+    "scheme": "wander-app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -32,6 +33,9 @@
         "projectId": "db8eeeb1-8d71-4969-8a51-e85211b36532"
       }
     },
-    "owner": "magicmirrorcreative"
+    "owner": "magicmirrorcreative",
+    "plugins": [
+      "expo-router"
+    ]
   }
 }
