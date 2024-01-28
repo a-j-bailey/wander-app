@@ -1,5 +1,5 @@
 import { Button } from 'react-native';
-import { Link, Stack, useRouter } from 'expo-router';
+import { Link, Stack, usePathname, useRouter } from 'expo-router';
 import React from 'react';
 import {
   StyleSheet,
@@ -16,14 +16,14 @@ const DATA = [
     title: 'Profile',
     data: [
       {
-        title: 'Test',
+        title: 'Tags Test',
         icon: <User />,
-        link: './menu/test'
+        link: 'menu/tags'
       },
       {
         title: 'Test2',
         icon: <User2 />,
-        link: 'test'
+        link: 'menu/test'
       }
     ],
   },
@@ -33,7 +33,7 @@ const DATA = [
       {
         title: 'Tags',
         icon: <Tags />,
-        link: './tags'
+        link: 'menu/tags'
       }
     ],
   },
@@ -41,6 +41,9 @@ const DATA = [
 
 export default function index() {
   const router = useRouter();
+  const path = usePathname();
+
+  console.log(path);
 
   return (             
     <View>

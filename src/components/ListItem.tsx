@@ -14,7 +14,7 @@ const ListItem = ({
     link: string
 }) => {
     return (
-        <Link href={{pathname: link}} asChild>
+        <Link href={link} asChild>
             <TouchableOpacity style={styles.container}>
                 <View style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
                     <View style={styles.iconContainer}>

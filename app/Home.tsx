@@ -1,47 +1,38 @@
 import React, { useCallback, useState, useMemo, useRef, useEffect } from 'react';
 import { View, Text, StyleSheet, FlatList, Button, TextInput, Pressable } from 'react-native';
 import BottomSheet from '@gorhom/bottom-sheet';
-import MapView, { Marker } from 'react-native-maps';
+import MapView, { Marker, UrlTile } from 'react-native-maps';
 import { Location, parseLocationFromAppleMapsUrl } from '../src/utilities';
-// import { locations, getLocations } from '../services/localLocations';
-import * as SQLite from 'expo-sqlite';
-import { Tag, ProfileButton} from '../src/components';
+import { Tag, ProfileButton, LocationCard} from '../src/components';
 import { dummyData } from '../src/services/TagService';
 import { Link, useNavigation } from 'expo-router';
+import { Plus, Search } from 'lucide-react-native';
+import LocalDatabase from '../src/services/Database';
+import MapSearch from '../src/components/MapSearch';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const Home = () => {
-  // database
-  const db = SQLite.openDatabase("database.db");
+  // ref
+  const bottomSheetRef = useRef<BottomSheet>(null);
+
+  // variables
+  const snapPoints = useMemo(() => ['25%', '60%'], []);
+
+  // data
+  const [savedLocations, setSavedLocations] = useState<Location[]>([]);
+  
+  // Init Database
+  const database = new LocalDatabase();
+  database.init();
 
   useEffect(() => {
-    db.transaction((tx) => {
-      tx.executeSql(
-        `create table if not exists locations (
-              id integer primary key not null,
-              title text,
-              latitude float,
-              longitude float,
-              auid integer,
-              address text
-          );`
-      );
+    database.getLocations().then((locations: Location[]) => {
+      setSavedLocations(locations);
     });
-
-    getLocations();
   }, []);
 
-  const getLocations = () => {
-    db.transaction((tx) => {
-      tx.executeSql(
-        `select * from locations;`,
-        [],
-        (_, { rows: { _array } }) => setSavedLocations(_array)
-      );
-    });
-  }
-
   const add = (location) => {
-    db.transaction(
+    database.db.transaction(
       (tx) => {
         tx.executeSql("insert into locations (title, latitude, longitude, auid, address) values (?, ?, ?, ?, ?)",
           [
@@ -53,11 +44,8 @@ const Home = () => {
           ]);
       },
       () => {console.log('Error')},
-      getLocations,
     );
   };
-
-  const [savedLocations, setSavedLocations] = useState<Location[]>([]);
 
   const [mapRegion, setmapRegion] = useState({
     latitude: 41.44935872697216,
@@ -67,12 +55,6 @@ const Home = () => {
   });
 
   const [link, setLink] = useState('placeholder');
-
-  // ref
-  const bottomSheetRef = useRef<BottomSheet>(null);
-
-  // variables
-  const snapPoints = useMemo(() => ['25%', '90%'], []);
 
   // callbacks
   const handleSheetChanges = useCallback((index: number) => {
@@ -87,11 +69,6 @@ const Home = () => {
     var location = parseLocationFromAppleMapsUrl(link);
 
     add(location);
-    // setSavedLocations([
-    //   ...savedLocations,
-    //   location
-    // ]
-    // );
   }
 
   const [tags, setTags] = useState(dummyData)
@@ -104,7 +81,8 @@ const Home = () => {
         // region={mapRegion}
         onMarkerPress={handlePoiClick}
         showsPointsOfInterest={true}
-        mapType='standard'
+        mapType='hybridFlyover'
+        showsBuildings={true}
       >
         {
           savedLocations.map((location) => {
@@ -112,9 +90,11 @@ const Home = () => {
           })
         }
       </MapView>
+      {/* MAP OVERLAY BUTTONS */}
+      <MapSearch />
       <BottomSheet
         ref={bottomSheetRef}
-        index={1}
+        index={0}
         snapPoints={snapPoints}
         onChange={handleSheetChanges}
       >
@@ -134,25 +114,30 @@ const Home = () => {
                 <Tag key={tag.id} {...tag}/>
               )) }
           </View>
-          <TextInput
-            style={{ height: 40 }}
-            placeholder="Paste link here..."
-            onChangeText={text => setLink(text)}
-          />
-          <Button title='Parse Link' onPress={parseLink} />
+          {/* FORM INPUT */}
+          <View style={{
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            backgroundColor: '#fafafa',
+            justifyContent: 'space-between',
+            width: '100%',
+            padding: 8,
+            borderRadius: 10,
+          }}>
+            <TextInput
+              style={{ height: 40 }}
+              placeholder="Paste link here..."
+              onChangeText={text => setLink(text)}
+            />
+            <Plus onPress={parseLink} style={{backgroundColor: 'blue' }} color={'white'}/>
+          </View>
+          {/* END FORM INPUT */}
           <FlatList
             style={{ width: '100%' }}
             data={savedLocations}
             renderItem={({ item }) =>
-              <View style={{ padding: 10 }} key={item.id}>
-                <Text>ID: {item.id}</Text>
-                <Text>Title: {item.title}</Text>
-                <Text>Address:  {item.address}</Text>
-                <Text>Coordinates:</Text>
-                <Text>  Lat:  {item.latitude}</Text>
-                <Text>  Lng:  {item.longitude}</Text>
-                <Text>Apple ID: {item.auid}</Text>
-              </View>
+              <LocationCard key={item.id} {...item} />
             }
           />
           <Text style={{
