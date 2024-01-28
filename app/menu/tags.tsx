@@ -13,57 +13,44 @@ const Item = ({
   title: string
   emoji: string
   highlightColor: string
-}) => (
-  <View style={styles(highlightColor).item}>
-    <View style={styles(highlightColor).iconContainer}>
-      <Text >{emoji}</Text>
-    </View>
-    <Text style={styles(highlightColor).title}>{title}</Text>
-    <Pencil size={16}/>
-  </View>
-);
-
-const EditModal = ({
-  visible
-}: {
-  visible: boolean
 }) => {
-
-  const {theme} = useData();
-
-  console.log(theme);
-
+  const { theme } = useData();
   return (
-    <Modal
-      animationType="slide"
-      transparent={true}
-      visible={visible}
-      // onRequestClose={() => {}}
-    >
-      <View style={styles2.centeredView}>
-        <View style={styles2.modalView}>
-          <Text style={styles2.modalText}>Hello World!</Text>
-          <Pressable
-            style={[styles2.button, styles2.buttonClose]}
-            // onPress={() => setModalVisible(!modalVisible)}
-          >
-            <Text style={styles2.textStyle}>Hide Modal</Text>
-          </Pressable>
-        </View>
+    <View style={styles.item}>
+      <View style={[styles.iconContainer, {backgroundColor: theme[highlightColor+'_2']}]}>
+        <Text >{emoji}</Text>
       </View>
-    </Modal>
+      <Text style={styles.title}>{title}</Text>
+      <Pencil size={16} color={theme.ui_3}/>
+    </View>
   )
 };
 
+// const EditModal = ({
+//   visible,
+//   closeModal
+// }: {
+//   visible: boolean;
+//   closeModal();
+// }) => {
+
+//   const {theme} = useData();
+
+//   return (
+    
+//   )
+// };
+
 export default function tags() {
   const [modalVisible, setModalVisible] = useState(false);
+  const { theme } = useData();
 
   return (
     <View style={styles2.centeredView}>
       <Stack.Screen 
         options={{
-          title: 'Settings',
-          headerRight: () => <Plus onPress={() => {}} />,
+          title: 'Your Tags',
+          headerRight: () => <Plus onPress={() => setModalVisible(true)} color={theme.blue}/>,
         }}
       />
       <FlatList
@@ -71,12 +58,24 @@ export default function tags() {
         data={dummyData}
         renderItem={({item}) => <Item {...item} />}
       />
-      <EditModal visible={modalVisible} />
-      <Pressable
-        style={[styles2.button, styles2.buttonOpen]}
-        onPress={() => setModalVisible(true)}>
-        <Text style={styles2.textStyle}>Show Modal</Text>
-      </Pressable>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => setModalVisible(!modalVisible)}
+      >
+        <View style={styles2.centeredView}>
+          <View style={styles2.modalView}>
+            <Text style={styles2.modalText}>Hello World!</Text>
+            <Pressable
+              style={[styles2.button, styles2.buttonClose]}
+              onPress={() => setModalVisible(!modalVisible)}
+            >
+              <Text style={styles2.textStyle}>Hide Modal</Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 }
@@ -132,7 +131,7 @@ const styles2 = StyleSheet.create({
   },
 })
 
-const styles = (highlightColor) => StyleSheet.create({
+const styles = StyleSheet.create({
   item: {
     borderBottomColor: '#e1e1e1',
     borderBottomWidth: 0.2,
@@ -144,7 +143,6 @@ const styles = (highlightColor) => StyleSheet.create({
   },
   iconContainer: {
     padding: 4,
-    backgroundColor: `#${highlightColor}`,
     width: 40,
     height: 40,
     borderRadius: 24,

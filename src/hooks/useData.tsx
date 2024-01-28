@@ -24,7 +24,7 @@ export const DataProvider = ({
     // Set isDark based on System Color Scheme
     useEffect(() => {
         setIsDark((colorScheme == 'dark'));
-        setIsDark(true);
+        // setIsDark(true);
     }, []);
 
     // Set theme based on isDark value.
