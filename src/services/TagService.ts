@@ -7,49 +7,49 @@ export const dummyData = [
         id: 1,
         title: 'Coffee',
         emoji: `☕️`,
-        highlightColor: '264653'
+        highlightColor: 'red'
     },
     {
         id: 2,
         title: 'Tacos',
         emoji: `🌮`,
-        highlightColor: '2a9d8f'
+        highlightColor: 'orange'
     },
     {
         id: 3,
         title: 'Adventure',
         emoji: `🏔️`,
-        highlightColor: 'e9c46a'
+        highlightColor: 'yellow'
     },
     {
         id: 4,
         title: 'Shopping',
         emoji: `🛍️`,
-        highlightColor: 'f4a261'
+        highlightColor: 'green'
     },
     {
         id: 5,
         title: 'Burgers',
         emoji: `🍔`,
-        highlightColor: 'e76f51'
+        highlightColor: 'cyan'
     },
     {
         id: 6,
         title: 'Cool Boats',
         emoji: `🛥️`,
-        highlightColor: '264653'
+        highlightColor: 'blue'
     },
     {
         id: 7,
         title: 'Lighthouses',
         emoji: `🌊`,
-        highlightColor: '2a9d8f'
+        highlightColor: 'purple'
     },
     {
         id: 8,
         title: 'Castles',
         emoji: `🏰`,
-        highlightColor: 'e9c46a'
+        highlightColor: 'magenta'
     },
 ];
 

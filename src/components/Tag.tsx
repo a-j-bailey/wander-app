@@ -1,4 +1,5 @@
 import { StyleSheet, Text, TouchableHighlight, View } from "react-native"
+import { useData } from "../hooks/useData";
 
 const Tag = ({
     id,
@@ -12,6 +13,8 @@ const Tag = ({
     highlightColor: string
 }) => {
 
+    const { theme } = useData()
+
     const onPress = (event) => {
         console.log(id);
     }
@@ -19,10 +22,16 @@ const Tag = ({
     return (
         <TouchableHighlight 
             onPress={onPress}
-            underlayColor='white'
+            underlayColor={theme.bg}
         >
-            <View style={styles(highlightColor).tagContainer} >
-                <Text style={styles(highlightColor).title}>{emoji} {title}</Text>
+            <View style={[
+                styles(highlightColor).tagContainer,
+                {
+                    backgroundColor: theme[highlightColor+'_2']+'33',
+                    borderColor: theme[highlightColor]
+                }
+            ]} >
+                <Text style={{color: theme.tx}}>{emoji} {title}</Text>
             </View>
         </TouchableHighlight>
     )
@@ -30,8 +39,6 @@ const Tag = ({
 
 const styles = (highlightColor) => StyleSheet.create({
     tagContainer: {
-        backgroundColor: `#${highlightColor}1A`,
-        
         // Spacing
         paddingVertical: 2,
         paddingHorizontal: 8,
@@ -41,11 +48,11 @@ const styles = (highlightColor) => StyleSheet.create({
         // Border
         borderRadius: 16,
         borderWidth: 1,
-        borderColor: `#${highlightColor}`,
+        // borderColor: `#${highlightColor}`,
     },
-    title: {
-        color: `#${highlightColor}`,
-    }
+    // title: {
+    //     color: `#${highlightColor}`,
+    // }
 });
 
 export default Tag;

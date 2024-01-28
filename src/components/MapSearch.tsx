@@ -37,9 +37,9 @@ const MapSearch = ({ }: {}) => {
                 )} : {}
             ]}>
             <TouchableHighlight
-                    underlayColor='white'
-                    style={styles.outerContainer}
-                >
+                underlayColor='white'
+                style={styles.outerContainer}
+            >
                 <BlurView style={styles.blurContainer} intensity={open ? 50 : 10}>
                     {
                         open ? 

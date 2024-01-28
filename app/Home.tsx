@@ -10,8 +10,13 @@ import { Plus, Search } from 'lucide-react-native';
 import LocalDatabase from '../src/services/Database';
 import MapSearch from '../src/components/MapSearch';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useData } from '../src/hooks/useData';
 
 const Home = () => {
+  const { isDark, handleIsDark, theme } = useData();
+
+  console.log(theme);
+
   // ref
   const bottomSheetRef = useRef<BottomSheet>(null);
 
@@ -97,11 +102,17 @@ const Home = () => {
         index={0}
         snapPoints={snapPoints}
         onChange={handleSheetChanges}
+        backgroundStyle={{backgroundColor: theme.bg}}
+        handleIndicatorStyle={{backgroundColor: theme.ui}}
       >
         <View style={styles.contentContainer}>
           {/* SHEET HEADER */}
           <View style={styles.sheetHeader}>
-            <Text style={{ fontSize: 18, fontWeight: 'bold' }}>Let's go on a trip</Text>
+            <Text style={{
+              fontSize: 18,
+              fontWeight: 'bold',
+              color: theme.tx
+            }}>Let's go on a trip</Text>
             <Link href={{ pathname: 'menu'}} asChild>
                 <Pressable>
                   <ProfileButton />
@@ -119,15 +130,15 @@ const Home = () => {
             display: 'flex',
             flexDirection: 'row',
             alignItems: 'center',
-            backgroundColor: '#fafafa',
             justifyContent: 'space-between',
             width: '100%',
             padding: 8,
             borderRadius: 10,
+            backgroundColor: theme.ui
           }}>
             <TextInput
-              style={{ height: 40 }}
               placeholder="Paste link here..."
+              placeholderTextColor={theme.tx_2}
               onChangeText={text => setLink(text)}
             />
             <Plus onPress={parseLink} style={{backgroundColor: 'blue' }} color={'white'}/>
@@ -141,8 +152,9 @@ const Home = () => {
             }
           />
           <Text style={{
-            fontSize: 8,
-            color: 'grey'
+            fontSize: 10,
+            fontWeight: '300',
+            color: theme.tx_3,
           }}>Not all those who wander are lost.</Text>
         </View>
       </BottomSheet>

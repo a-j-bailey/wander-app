@@ -1,14 +1,16 @@
 import { Text, View } from "react-native"
+import { useData } from "../hooks/useData";
 
 const ProfileButton = ({
     size = 40
 }: {
     size?: number
 }) => {
+    const { theme } = useData();
     return (
         <View
             style={{
-                backgroundColor: '#4950571a',
+                backgroundColor: theme.ui,
                 padding: 4,
                 borderRadius: size,
                 width: size,
@@ -20,17 +22,11 @@ const ProfileButton = ({
             <Text
                 style={{
                     fontWeight: 'bold',
-                    color: '#495057'
+                    color: theme.tx_2
                 }}
             >AB</Text>
         </View>
     )
-
-    // return (
-    //     <View style={styles(highlightColor).tagContainer} >
-    //         <Text style={styles(highlightColor).title}>{emoji} {title}</Text>
-    //     </View>
-    // )
 };
 
 export default ProfileButton;

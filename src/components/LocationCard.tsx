@@ -1,4 +1,5 @@
 import { StyleSheet, Text, TouchableHighlight, View } from "react-native"
+import { useData } from "../hooks/useData";
 
 const LocationCard = ({
     id,
@@ -16,6 +17,8 @@ const LocationCard = ({
     address?: string
 }) => {
 
+    const { theme } = useData();
+
     const onPress = (event) => {
         console.log(id);
     }
@@ -25,13 +28,16 @@ const LocationCard = ({
             onPress={onPress}
             underlayColor='white'
         >
-            <View style={styles.container} >
-                <View style={styles.imageContainer}>
+            <View style={[
+                styles.container,
+                {backgroundColor: theme.bg_2}
+            ]} >
+                <View style={[styles.imageContainer, {backgroundColor: theme.blue}]}>
 
                 </View>
                 <View style={styles.dataContainer}>
-                    <Text style={styles.title}>{title}</Text>
-                    <Text style={styles.address}>{address}</Text>
+                    <Text style={[styles.title, {color: theme.tx}]}>{title}</Text>
+                    <Text style={[styles.address, {color: theme.tx_2}]}>{address}</Text>
                 </View>
             </View>
         </TouchableHighlight>
@@ -40,8 +46,6 @@ const LocationCard = ({
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#fafafa',
-        
         // Display
         display: 'flex',
         flexDirection: 'row',
@@ -57,7 +61,6 @@ const styles = StyleSheet.create({
         
     },
     imageContainer: {
-        backgroundColor: 'blue',
         borderRadius: 8,
         width: 56,
         height: 56
