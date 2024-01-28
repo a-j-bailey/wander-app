@@ -8,9 +8,7 @@ import { DataProvider } from '../src/hooks/useData';
 export default function App() {
   return (
     <GestureHandlerRootView style={styles.container}>
-      <DataProvider>
-        <Home />
-      </DataProvider>
+      <Home />
     </GestureHandlerRootView>
   );
 }

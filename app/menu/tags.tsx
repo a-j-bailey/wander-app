@@ -3,6 +3,7 @@ import { Link, Stack, useRouter } from 'expo-router';
 import { dummyData } from '../../src/services/TagService';
 import { Edit, Pencil, Plus } from 'lucide-react-native';
 import { useState } from 'react';
+import { useData } from '../../src/hooks/useData';
 
 const Item = ({
   title,
@@ -27,6 +28,11 @@ const EditModal = ({
 }: {
   visible: boolean
 }) => {
+
+  const {theme} = useData();
+
+  console.log(theme);
+
   return (
     <Modal
       animationType="slide"

@@ -1,14 +1,16 @@
 import { Stack } from 'expo-router';
-// import { Home } from '..';
+import { DataProvider } from '../src/hooks/useData';
 
 export default function Layout() {
   return (
-    <Stack
-      screenOptions={{
-        headerShown: false,
-        presentation: 'modal',
-      }}
-    >
-    </Stack>
+    <DataProvider>
+      <Stack
+        screenOptions={{
+          headerShown: false,
+          presentation: 'modal',
+        }}
+      >
+      </Stack>
+    </DataProvider>
   );
 }

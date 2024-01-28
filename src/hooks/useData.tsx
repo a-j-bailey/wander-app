@@ -1,22 +1,4 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
-// import Storage from '@react-native-async-storage/async-storage';
-
-// import {
-//   IArticle,
-//   ICategory,
-//   IProduct,
-//   IUser,
-//   IUseData,
-//   ITheme,
-// } from '../constants/types';
-
-// import {
-//   USERS,
-//   FOLLOWING,
-//   TRENDING,
-//   CATEGORIES,
-//   ARTICLES,
-// } from '../constants/mocks';
 import { LIGHT_THEME, DARK_THEME } from '../constants/theme';
 import { Appearance, useColorScheme } from 'react-native';
 

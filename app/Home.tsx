@@ -15,8 +15,6 @@ import { useData } from '../src/hooks/useData';
 const Home = () => {
   const { isDark, handleIsDark, theme } = useData();
 
-  console.log(theme);
-
   // ref
   const bottomSheetRef = useRef<BottomSheet>(null);
 
