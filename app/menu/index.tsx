@@ -128,17 +128,7 @@ export default function index() {
           />,
         },
       ],
-    },
-    {
-      title: null,
-      options: [
-        {
-          title: 'Tags',
-          icon: <Tags color={theme.tx} />,
-          link: 'menu/tags',
-        }
-      ],
-    },
+    }
   ];
 
   return (             
