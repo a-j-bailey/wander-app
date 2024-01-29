@@ -21,7 +21,7 @@ const Home = () => {
   const tagSheet = useRef<BottomSheet>(null);
 
   // variables
-  const snapPoints = useMemo(() => ['25%', '60%'], []);
+  const snapPoints = useMemo(() => ['25%', '50%'], []);
 
   // data
   const [savedLocations, setSavedLocations] = useState<Location[]>([]);
@@ -144,7 +144,12 @@ const Home = () => {
                 <Tag key={tag.id} {...tag} />
               )) }
               <TouchableHighlight 
-                onPress={() => {}}
+                onPress={() => selectTag({
+                  id: null,
+                  title: '',
+                  emoji: '',
+                  highlightColor: ''
+                })}
                 underlayColor={theme.bg}
                 style={{
                   backgroundColor: theme.ui,
