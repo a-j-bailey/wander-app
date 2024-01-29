@@ -1,22 +1,24 @@
 import React, { useCallback, useState, useMemo, useRef, useEffect } from 'react';
-import { View, Text, StyleSheet, FlatList, Button, TextInput, Pressable } from 'react-native';
+import { View, Text, StyleSheet, FlatList, Button, TextInput, Pressable, TouchableHighlight } from 'react-native';
 import BottomSheet from '@gorhom/bottom-sheet';
 import MapView, { Marker, UrlTile } from 'react-native-maps';
 import { Location, parseLocationFromAppleMapsUrl } from '../src/utilities';
-import { Tag, ProfileButton, LocationCard} from '../src/components';
+import { Tag, Avatar, LocationCard} from '../src/components';
 import { dummyData } from '../src/services/TagService';
-import { Link, useNavigation } from 'expo-router';
+import { Link, Stack, useNavigation } from 'expo-router';
 import { Plus, Search } from 'lucide-react-native';
 import LocalDatabase from '../src/services/Database';
 import MapSearch from '../src/components/MapSearch';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useData } from '../src/hooks/useData';
+import TagView from '../src/views/tagView';
 
 const Home = () => {
-  const { isDark, handleIsDark, theme } = useData();
+  const { isDark, handleIsDark, theme, activeTag, selectTag } = useData();
 
   // ref
-  const bottomSheetRef = useRef<BottomSheet>(null);
+  const homeSheet = useRef<BottomSheet>(null);
+  const tagSheet = useRef<BottomSheet>(null);
 
   // variables
   const snapPoints = useMemo(() => ['25%', '60%'], []);
@@ -64,6 +66,13 @@ const Home = () => {
     console.log('handleSheetChanges', index);
   }, []);
 
+  // Handles dismissing the Tags sheet.
+  const handleTagSheetChange = useCallback((index: number) => {
+    if (index < 0) {
+      selectTag(null);
+    }
+  }, []);
+
   const handlePoiClick = useCallback((event) => {
     console.log('coordinate', event.nativeEvent);
   }, []);
@@ -76,6 +85,18 @@ const Home = () => {
 
   const [tags, setTags] = useState(dummyData)
 
+  useEffect(() => {
+    console.log(activeTag);
+    if (activeTag != null) {
+      homeSheet.current.close();
+      tagSheet.current.snapToIndex(0);
+    } else {
+      homeSheet.current.snapToIndex(0);
+      tagSheet.current.close();
+    }
+    console.log('detectedChange');
+  }, [activeTag])
+
   // renders
   return (
     <View style={styles.container}>
@@ -84,7 +105,7 @@ const Home = () => {
         // region={mapRegion}
         onMarkerPress={handlePoiClick}
         showsPointsOfInterest={true}
-        mapType='hybridFlyover'
+        // mapType='hybridFlyover'
         showsBuildings={true}
       >
         {
@@ -96,7 +117,7 @@ const Home = () => {
       {/* MAP OVERLAY BUTTONS */}
       <MapSearch />
       <BottomSheet
-        ref={bottomSheetRef}
+        ref={homeSheet}
         index={0}
         snapPoints={snapPoints}
         onChange={handleSheetChanges}
@@ -113,15 +134,30 @@ const Home = () => {
             }}>Let's go on a trip</Text>
             <Link href={{ pathname: 'menu'}} asChild>
                 <Pressable>
-                  <ProfileButton />
+                  <Avatar text='AB' />
                 </Pressable>
             </Link>
           </View>
           {/* TAG SECTION */}
           <View style={styles.tags}>
             { tags.map((tag) => (
-                <Tag key={tag.id} {...tag}/>
+                <Tag key={tag.id} {...tag} />
               )) }
+              <TouchableHighlight 
+                onPress={() => {}}
+                underlayColor={theme.bg}
+                style={{
+                  backgroundColor: theme.ui,
+                  padding: 8,
+                  borderRadius: 24,
+                  width: 24,
+                  height: 24,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+              >
+                <Plus color={theme.tx_2}/>
+              </TouchableHighlight>
           </View>
           {/* FORM INPUT */}
           <View style={{
@@ -155,6 +191,18 @@ const Home = () => {
             color: theme.tx_3,
           }}>Not all those who wander are lost.</Text>
         </View>
+      </BottomSheet>
+      {/* TAG SHEET */}
+      <BottomSheet
+        enablePanDownToClose={true}
+        ref={tagSheet}
+        index={-1}
+        snapPoints={snapPoints}
+        onChange={handleTagSheetChange}
+        backgroundStyle={{backgroundColor: theme.bg}}
+        handleIndicatorStyle={{backgroundColor: theme.ui}}
+      >
+        <TagView />
       </BottomSheet>
     </View>
   );

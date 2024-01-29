@@ -1,37 +1,28 @@
 import { StyleSheet, Text, TouchableHighlight, View } from "react-native"
 import { useData } from "../hooks/useData";
+import { TagType } from "../services/TagService";
 
-const Tag = ({
-    id,
-    title,
-    emoji,
-    highlightColor
-}: {
-    id: number,
-    title: string,
-    emoji: string,
-    highlightColor: string
-}) => {
+const Tag = (tag: TagType) => {
 
-    const { theme } = useData()
+    const { theme, selectTag } = useData()
 
-    const onPress = (event) => {
-        console.log(id);
-    }
+    // const onPress = (event) => {
+    //     console.log(id);
+    // }
 
     return (
         <TouchableHighlight 
-            onPress={onPress}
+            onPress={() => selectTag(tag)}
             underlayColor={theme.bg}
         >
             <View style={[
-                styles(highlightColor).tagContainer,
+                styles(tag.highlightColor).tagContainer,
                 {
-                    backgroundColor: theme[highlightColor+'_2']+'33',
-                    borderColor: theme[highlightColor]
+                    backgroundColor: theme[tag.highlightColor+'_2']+'33',
+                    borderColor: theme[tag.highlightColor]
                 }
             ]} >
-                <Text style={{color: theme.tx}}>{emoji} {title}</Text>
+                <Text style={{color: theme.tx}}>{tag.emoji} {tag.title}</Text>
             </View>
         </TouchableHighlight>
     )

@@ -2,6 +2,13 @@ import { useState } from 'react';
 import { Location } from '../utilities';
 import * as SQLite from 'expo-sqlite';
 
+export interface TagType {
+    id: number,
+    title: string,
+    emoji: string,
+    highlightColor: string,
+};
+
 export const dummyData = [
     {
         id: 1,

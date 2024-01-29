@@ -1,6 +1,7 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { LIGHT_THEME, DARK_THEME } from '../constants/theme';
 import { Appearance, useColorScheme } from 'react-native';
+import { TagType } from '../services/TagService';
 
 export const DataContext = React.createContext({});
 
@@ -11,6 +12,7 @@ export const DataProvider = ({
 }) => {
     const [isDark, setIsDark] = useState(false);
     const [theme, setTheme] = useState(LIGHT_THEME);
+    const [activeTag, setActiveTag] = useState<TagType | null>(null);
     const colorScheme = useColorScheme();
 
     // handle isDark mode
@@ -32,11 +34,21 @@ export const DataProvider = ({
         setTheme(isDark ? DARK_THEME : LIGHT_THEME);
     }, [isDark]);
 
+    // TAGS:
+    const selectTag = useCallback(
+        (payload: TagType) => {
+            setActiveTag(payload);
+        },
+        [setActiveTag],
+    );
+
     const contextValue = {
         isDark,
         handleIsDark,
         theme,
         setTheme,
+        activeTag,
+        selectTag
     };
 
     return (
@@ -51,4 +63,6 @@ export const useData = () => useContext(DataContext) as {
     handleIsDark: (isDark?: boolean) => void;
     theme;
     setTheme: (theme) => void;
+    activeTag: TagType | null,
+    selectTag: (payload: TagType) => void;
 };
