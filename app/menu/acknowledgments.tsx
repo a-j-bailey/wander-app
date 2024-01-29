@@ -24,10 +24,6 @@ export default function acknowledgements() {
         https://lucide.dev/
       </Text>
       <Text style={{color: theme.tx}}>
-        Lucide Icon
-        https://lucide.dev/
-      </Text>
-      <Text style={{color: theme.tx}}>
         Mo Gorhom (Bottom Sheet)
         https://gorhom.dev
       </Text>
