@@ -4,6 +4,7 @@ import { Dimensions, StyleSheet, Text, TouchableHighlight, View } from "react-na
 import { BlurView } from "expo-blur"
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { TextInput } from "react-native-gesture-handler";
+import { useData } from "../hooks/useData";
 
 const OpenSearch = ({ }: {}) => {
     
@@ -24,6 +25,7 @@ const MapSearch = ({ }: {}) => {
     const windowWidth = Dimensions.get('window').width;
     const insets = useSafeAreaInsets();
     const [open, setOpen] = useState(false);
+    const { theme } = useData();
 
     return (
         <View
@@ -38,7 +40,13 @@ const MapSearch = ({ }: {}) => {
             ]}>
             <TouchableHighlight
                 underlayColor='white'
-                style={styles.outerContainer}
+                style={[
+                    styles.outerContainer,
+                    {
+                        backgroundColor: theme.bg+'40',
+                        borderColor: theme.bg
+                    }
+                ]}
             >
                 <BlurView style={styles.blurContainer} intensity={open ? 50 : 10}>
                     {
@@ -47,18 +55,18 @@ const MapSearch = ({ }: {}) => {
                             <TextInput
                                 style={styles.textInput}
                                 placeholder="Search..."
-                                placeholderTextColor={'white'}
+                                placeholderTextColor={theme.tx}
                                 // onChangeText={text => setLink(text)}
                             />
                             <X
                                 style={styles.button}
-                                color={'white'}
+                                color={theme.tx}
                                 onPress={() => setOpen(!open)}
                             />
                         </>
                         
                         : <Search
-                            color={'white'}
+                            color={theme.tx}
                             onPress={() => setOpen(!open)}
                         />
                     }
@@ -82,12 +90,12 @@ const outerStyles = (x, y) => StyleSheet.create({
 
 const styles = StyleSheet.create({
     outerContainer: {
-        backgroundColor: `#2121211A`,
+        // backgroundColor: `#2121211A`,
 
         // Border
         borderRadius: 16,
         borderWidth: 2,
-        borderColor: `#FFFFFF`,
+        // borderColor: `#FFFFFF`,
         overflow: 'hidden',
     },
     blurContainer: {

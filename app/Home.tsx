@@ -118,7 +118,8 @@ const Home = () => {
         // region={mapRegion}
         onMarkerPress={handlePoiClick}
         showsPointsOfInterest={true}
-        // mapType='hybridFlyover'
+        // mapType='mutedStandard'
+        userInterfaceStyle={isDark ? 'dark' : 'light'}
         showsBuildings={true}
       >
         {
