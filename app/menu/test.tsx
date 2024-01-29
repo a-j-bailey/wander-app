@@ -9,7 +9,7 @@ export default function tags() {
 
   return (
     <View>
-      <Text>Test</Text>
+      <Text>- Flexoki (Color Theme)</Text>
     </View>
   );
 }

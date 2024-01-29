@@ -1,4 +1,4 @@
-import { Button, Switch } from 'react-native';
+import { Button, Settings, Switch } from 'react-native';
 import { Link, Stack, usePathname, useRouter } from 'expo-router';
 import React, { ReactElement, useState } from 'react';
 import {
@@ -8,7 +8,7 @@ import {
   SectionList,
   StatusBar,
 } from 'react-native';
-import { ChevronRight, LucideIcon, Moon, Sun, Tags, User, User2 } from 'lucide-react-native';
+import { ChevronRight, Coffee, LucideIcon, MessageCircleHeart, Moon, Scroll, Settings2, Sun, Tags, Theater, User, User2 } from 'lucide-react-native';
 import { useData } from '../../src/hooks/useData';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
@@ -113,6 +113,12 @@ export default function index() {
           action: null,
         },
         {
+          title: 'Preferences',
+          icon: <Settings2 color={theme.tx} />,
+          link: 'menu/tags',
+          action: null,
+        },
+        {
           title: 'Color Scheme:',
           icon: isDark ? <Moon color={theme.tx} /> : <Sun color={theme.tx} />,
           link: null,
@@ -128,6 +134,21 @@ export default function index() {
           />,
         },
       ],
+    },
+    {
+      title: null,
+      options: [
+        {
+          title: 'Acknowledgements',
+          icon: <Scroll color={theme.tx}/>,
+          link: 'menu/acknowledgments',
+        },
+        {
+          title: 'Say "Hi" on Twitter',
+          icon: <MessageCircleHeart color={theme.tx}/>,
+          link: null,
+        }
+      ]
     }
   ];
 
@@ -135,7 +156,7 @@ export default function index() {
     <View>
       <Stack.Screen 
         options={{
-          title: 'Settings',
+          title: '',
           headerRight: () => <Button onPress={() => {router.back()}} title="Done" color={theme.blue}/>,
         }}
       />
