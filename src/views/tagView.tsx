@@ -57,7 +57,6 @@ const TagView_Editing = ({
                         emoji: value
                     })}
                     placeholder="?"
-                    maxLength={1}
                 />}
             />
             <BottomSheetTextInput
@@ -73,7 +72,6 @@ const TagView_Editing = ({
                 value={tagData.title}
                 placeholderTextColor={theme.ui_3}
                 placeholder="A good name goes here..."
-                keyboardType="numeric"
             />
             {/* COLOR PICKER */}
             <View style={{
