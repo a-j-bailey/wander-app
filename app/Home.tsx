@@ -73,6 +73,16 @@ const Home = () => {
     }
   }, []);
 
+  const handleCreateTag = useCallback(() => {
+    tagSheet.current.snapToIndex(1);
+    selectTag({
+      id: null,
+      title: '',
+      emoji: '',
+      highlightColor: ''
+    });
+  }, []);
+
   const handlePoiClick = useCallback((event) => {
     console.log('coordinate', event.nativeEvent);
   }, []);
@@ -87,9 +97,12 @@ const Home = () => {
 
   useEffect(() => {
     console.log(activeTag);
-    if (activeTag != null) {
+    if (activeTag && activeTag.id != null) {
       homeSheet.current.close();
       tagSheet.current.snapToIndex(0);
+    } else if (activeTag && activeTag.id == null) {
+      homeSheet.current.close();
+      tagSheet.current.snapToIndex(1);
     } else {
       homeSheet.current.snapToIndex(0);
       tagSheet.current.close();
@@ -144,12 +157,7 @@ const Home = () => {
                 <Tag key={tag.id} {...tag} />
               )) }
               <TouchableHighlight 
-                onPress={() => selectTag({
-                  id: null,
-                  title: '',
-                  emoji: '',
-                  highlightColor: ''
-                })}
+                onPress={() => handleCreateTag()}
                 underlayColor={theme.bg}
                 style={{
                   backgroundColor: theme.ui,

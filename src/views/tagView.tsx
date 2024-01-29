@@ -156,7 +156,7 @@ const TagView = () => {
     }
 
     const handleCancel = () =>{
-        if (editing) {
+        if (editing && formData.id != null) {
             setFormData({
                 id: null,
                 title: '',
